@@ -13,17 +13,17 @@ exports.getCategories = async (req, res, next) => {
 exports.getCategory = async (req, res, next) => {
   try {
     // ban than req.params.id da la mot object nen khong can {id: req.params.id}
-    // tranh dat trung ten bien Category
-    let category = await Category.findById(req.params.id);
+    //^^^^ tranh dat trung ten bien Category
+    const category = await Category.findById(req.params.id);
     if (!category) {
-      res.status(400).json({
-        success: false,
-        error: `No category with that id of ${req.params.id}`,
-      });
+      return res
+        .status(400)
+        .json({ success: true, error: `no category with ${req.params.id}` });
     }
     res.status(200).json({ success: true, data: category });
   } catch (err) {
-    res.status(400).json({ success: false, error: err.message });
+    next(err);
+    // res.status(400).json({ success: false, error: err.message });
   }
 };
 

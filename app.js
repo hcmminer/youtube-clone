@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./config/.env" });
 const morgan = require("morgan");
 const DBconection = require("./db.js");
+const ErrorHanler = require("./middleware/errorhadler");
 
 const app = express();
 
@@ -19,6 +20,7 @@ if ((process.env.NODE_ENV = "development")) {
 
 // tranh viet lai api/v1/categories trong categoryRoutes nhieu lan
 app.use("/api/v1/categories/", categoryRoutes);
+app.use(ErrorHanler);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
